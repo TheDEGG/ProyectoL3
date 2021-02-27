@@ -60,12 +60,50 @@ namespace Entregas
 
         private void Usuario_TextChanged(object sender, EventArgs e)
         {
-
+            
         }
 
         private void Contrasena_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void Usuario_Enter(object sender, EventArgs e)
+        {
+            if (Usuario.Text == "USUARIO")
+            {
+                Usuario.Text = "";
+                Usuario.ForeColor = Color.LightGray;
+            }
+        }
+
+        private void Usuario_Leave(object sender, EventArgs e)
+        {
+            if (Usuario.Text == "")
+            {
+                Usuario.Text = "USUARIO";
+                Usuario.ForeColor = Color.Silver;
+            }
+        }
+
+        private void Contrasena_Enter(object sender, EventArgs e)
+        {
+            if (Contrasena.Text == "CONTRASEÑA")
+            {
+                Contrasena.Text = "";
+                Contrasena.ForeColor = Color.LightGray;
+                Contrasena.UseSystemPasswordChar = true;
+            }
+        }
+
+        private void Contrasena_Leave(object sender, EventArgs e)
+        {
+            if (Contrasena.Text == "")
+            {
+                Contrasena.Text = "CONTRASEÑA";
+                Contrasena.ForeColor = Color.Silver;
+                Contrasena.UseSystemPasswordChar = false;
+            }
         }
     }
 }

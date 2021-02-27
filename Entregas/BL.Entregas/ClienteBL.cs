@@ -16,8 +16,7 @@ namespace BL.Entregas
             ListadeClientes = new BindingList<Clientes>();
 
             var cliente1 = new Clientes();
-            //cliente1.CodigoCliente = "SPS001";
-            cliente1.CodigoCliente = "1";
+            cliente1.CodigoCliente = "SPS001";
             cliente1.RTN = "0908999636134";
             cliente1.NombredeEmpresa = "Repuestos y Mas";
             cliente1.Direccion = "Barrio Suyapa, 9 clle, 10 Ave";
@@ -28,8 +27,7 @@ namespace BL.Entregas
             ListadeClientes.Add(cliente1);
 
             var cliente2 = new Clientes();
-            //cliente2.CodigoCliente = "SPS002";
-            cliente2.CodigoCliente = "2";
+            cliente2.CodigoCliente = "SPS002";
             cliente2.RTN = "08015269471313";
             cliente2.NombredeEmpresa = "Comercializadora de Productos";
             cliente2.Direccion = "Colonia Las Mercedes, casa 20";
@@ -46,6 +44,7 @@ namespace BL.Entregas
             return ListadeClientes;
         }
 
+        //BOTONES DE GUARDAR 
         public Resultado GuardarCliente(Clientes cliente)
         {
             var resultado = Validar(cliente);
@@ -62,11 +61,13 @@ namespace BL.Entregas
             resultado.Exitoso = true;
             return resultado;
         }
+        // Funcion AGREGAMOS UN NUEVO CLIENTE
         public void AgregarCliente()
         {
             var nuevoCliente = new Clientes();
             ListadeClientes.Add(nuevoCliente);
         }
+        //Funcion Eliminar 
         public bool EliminarCliente(string id)
         {
             foreach (var cliente in ListadeClientes)
@@ -80,7 +81,7 @@ namespace BL.Entregas
             }
             return false;
         }
-
+        //VALIDACIONES DE DATOS DE CLIENTE 
         private Resultado Validar(Clientes Cliente)
         {
             var resultado = new Resultado();
@@ -132,6 +133,7 @@ namespace BL.Entregas
 
     }
 
+    //Funciones para Validar
     public class Resultado
     {
         public bool Exitoso { get; set; }

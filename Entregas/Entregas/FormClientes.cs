@@ -41,6 +41,7 @@ namespace Entregas
             DeshabilitarHabilitarBotones(false); 
         }
 
+        //Habilitar los botones 
         private void DeshabilitarHabilitarBotones(bool valor)
         {
             bindingNavigatorMoveFirstItem.Enabled = valor;
@@ -74,7 +75,7 @@ namespace Entregas
 
         private void bindingNavigatorDeleteItem_Click(object sender, EventArgs e)
         {
-            //if (codigoClienteTextBox = "")
+            
             {
                 var resultado = MessageBox.Show("Desea eliminar este Cliente?", "Eliminar", MessageBoxButtons.YesNo);
                 if (resultado == DialogResult.Yes)
@@ -100,6 +101,8 @@ namespace Entregas
                 MessageBox.Show("Ocurrio un Error al Eliminar Cliente");
             }
         }
+
+        //Boton de Cancelar
 
         private void toolStripButtonCancelar_Click(object sender, EventArgs e)
         {
