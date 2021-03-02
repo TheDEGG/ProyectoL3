@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,38 +10,19 @@ namespace BL.Entregas
 {
     public class ClienteBL
     {
+        Contexto _contexto;
         public BindingList<Clientes> ListadeClientes { get; set; }
 
         public ClienteBL() // Constructor
         {
+            _contexto = new Contexto();
             ListadeClientes = new BindingList<Clientes>();
-
-            var cliente1 = new Clientes();
-            cliente1.CodigoCliente = "SPS001";
-            cliente1.RTN = "0908999636134";
-            cliente1.NombredeEmpresa = "Repuestos y Mas";
-            cliente1.Direccion = "Barrio Suyapa, 9 clle, 10 Ave";
-            cliente1.Telefono = "2554-0630";
-            cliente1.Contacto = "Javier Martinez";
-            cliente1.Activo = true;
-
-            ListadeClientes.Add(cliente1);
-
-            var cliente2 = new Clientes();
-            cliente2.CodigoCliente = "SPS002";
-            cliente2.RTN = "08015269471313";
-            cliente2.NombredeEmpresa = "Comercializadora de Productos";
-            cliente2.Direccion = "Colonia Las Mercedes, casa 20";
-            cliente2.Telefono = "9865-2424";
-            cliente2.Contacto = "Laura Perez";
-            cliente2.Activo = true;
-
-            ListadeClientes.Add(cliente2);
-
         }
 
         public BindingList<Clientes> ObtenerClientes()
         {
+            _contexto.Clientes.Load();
+            ListadeClientes = _contexto.Clientes.Local.ToBindingList();
             return ListadeClientes;
         }
 
@@ -52,13 +34,10 @@ namespace BL.Entregas
             {
                 return resultado;
             }
-
-            if(cliente.CodigoCliente == "0")
-            {
-                cliente.CodigoCliente = ListadeClientes.Max(item => item.CodigoCliente) + 1;
-            }
-
+            _contexto.SaveChanges();
+          
             resultado.Exitoso = true;
+            
             return resultado;
         }
         // Funcion AGREGAMOS UN NUEVO CLIENTE
@@ -68,29 +47,26 @@ namespace BL.Entregas
             ListadeClientes.Add(nuevoCliente);
         }
         //Funcion Eliminar 
-        public bool EliminarCliente(string id)
+        public bool EliminarCliente(int Id)
         {
             foreach (var cliente in ListadeClientes)
             {
-                if (cliente.CodigoCliente == id)
+                if (cliente.Id == Id)
                 {
                     ListadeClientes.Remove(cliente);
+                    _contexto.SaveChanges();
                     return true;
                 }
                     
             }
             return false;
         }
+
         //VALIDACIONES DE DATOS DE CLIENTE 
         private Resultado Validar(Clientes Cliente)
         {
             var resultado = new Resultado();
             resultado.Exitoso = true;
-            if (string.IsNullOrEmpty(Cliente.CodigoCliente) == true)
-            {
-                resultado.Mensaje = "Ingrese un codigo";
-                resultado.Exitoso = false;
-            }
             if (string.IsNullOrEmpty(Cliente.Contacto) == true)
             {
                 resultado.Mensaje = "Ingrese un contacto";
@@ -123,7 +99,8 @@ namespace BL.Entregas
 
     public class Clientes //CLASE Y DEFINICION DE PROPIEDADES
     {
-        public string CodigoCliente { get; set; }
+        public int Id { get; set; }
+        //public int CodigoCliente { get; set; }
         public string RTN { get; set; }
         public string NombredeEmpresa { get; set; }
         public string Direccion { get; set; }
